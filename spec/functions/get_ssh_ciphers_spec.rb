@@ -47,4 +47,28 @@ describe 'get_ssh_ciphers' do
       and_return('aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc')
   end
 
+  # should get the correct ciphers (ubuntu 14.04, default)
+  it do
+    should run.with_params('ubuntu', '14.04', false).
+      and_return('chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr')
+  end
+
+  # should get the correct ciphers (ubuntu 14.04, weak)
+  it do
+    should run.with_params('ubuntu', '14.04', true).
+      and_return('chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc')
+  end
+
+  # should get the correct ciphers (ubuntu 16.04, default)
+  it do
+    should run.with_params('ubuntu', '16.04', false).
+      and_return('chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr')
+  end
+
+  # should get the correct ciphers (ubuntu 16.04, weak)
+  it do
+    should run.with_params('ubuntu', '16.04', true).
+      and_return('chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc')
+  end
+
 end

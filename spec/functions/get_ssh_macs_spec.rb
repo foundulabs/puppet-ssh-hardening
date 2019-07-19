@@ -47,4 +47,28 @@ describe 'get_ssh_macs' do
       and_return('hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,hmac-sha1')
   end
 
+  # it should get the correct macs (ubuntu 14.04, default)
+  it do
+    should run.with_params('ubuntu', '14.04', false).
+      and_return('hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256')
+  end
+
+  # it should get the correct macs (ubuntu 14.04, weak)
+  it do
+    should run.with_params('ubuntu', '14.04', true).
+      and_return('hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-sha1')
+  end
+
+  # it should get the correct macs (ubuntu 16.04, default)
+  it do
+    should run.with_params('ubuntu', '16.04', false).
+      and_return('hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256')
+  end
+
+  # it should get the correct macs (ubuntu 16.04, weak)
+  it do
+    should run.with_params('ubuntu', '16.04', true).
+      and_return('hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-sha1')
+  end
+
 end

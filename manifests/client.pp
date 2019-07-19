@@ -34,11 +34,11 @@
 #
 class ssh_hardening::client (
   $cbc_required = false,
-  $weak_hmac = false,
-  $weak_kex = false,
-  $ports = [ 22 ],
+  $weak_hmac    = false,
+  $weak_kex     = false,
+  $ports        = [22],
   $options      = {},
-  $ipv6_enabled = false
+  $ipv6_enabled = false,
 ) {
   if $ipv6_enabled == true {
     $addressfamily = 'any'
@@ -50,7 +50,14 @@ class ssh_hardening::client (
   $macs = get_ssh_macs($::operatingsystem, $::operatingsystemrelease, $weak_hmac)
   $kex = get_ssh_kex($::operatingsystem, $::operatingsystemrelease, $weak_kex)
 
-  $ssh_options = {
+  $default_hardened_options = {
+    # Basic configuration
+    # ===================
+    'Host *'                    => {
+      'SendEnv'        => 'LANG LC_*',
+      'HashKnownHosts' => 'yes',
+    },
+
     # Set the addressfamily according to IPv4 / IPv6 settings
     'AddressFamily'             => $addressfamily,
 
@@ -139,10 +146,13 @@ class ssh_hardening::client (
     #VisualHostKey yes
   }
 
-  $merged_options = merge($ssh_options, $options)
+  $merged_options = merge($default_hardened_options, $options)
 
-  class { 'ssh::client':
-    storeconfigs_enabled => false,
-    options              => delete_undef_values($merged_options),
+  file { '/etc/ssh/ssh_config':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template("${module_name}/ssh_config.erb"),
   }
+
 }

@@ -47,4 +47,28 @@ describe 'get_ssh_kex' do
       and_return('diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1')
   end
 
+  # should get the correct kex (ubuntu 14.04, default)
+  it do
+    should run.with_params('ubuntu', '14.04', false).
+      and_return('diffie-hellman-group-exchange-sha256')
+  end
+
+  # should get the correct kex (ubuntu 14.04, weak)
+  it do
+    should run.with_params('ubuntu', '14.04', true).
+      and_return('diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1')
+  end
+
+  # should get the correct kex (ubuntu 16.04, default)
+  it do
+    should run.with_params('ubuntu', '16.04', false).
+      and_return('diffie-hellman-group-exchange-sha256')
+  end
+
+  # should get the correct kex (ubuntu 16.04, weak)
+  it do
+    should run.with_params('ubuntu', '16.04', true).
+      and_return('diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1')
+  end
+
 end
