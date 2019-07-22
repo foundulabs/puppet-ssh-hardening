@@ -33,25 +33,25 @@ describe 'ssh_hardening::client' do
   end
 
   # default configuration
-  it { should contain_file('/etc/ssh/ssh_config').with_content(/^Port = 22$/) }
+  it { should contain_file('/etc/ssh/ssh_config').with_content(/^Port 22$/) }
 
   # user configuration
   context 'with ports => [8022]' do
     let(:params) { { :ports => [8022] } }
-    it { should contain_file('/etc/ssh/ssh_config').with_content(/^Port = 8022$/) }
+    it { should contain_file('/etc/ssh/ssh_config').with_content(/^Port 8022$/) }
   end
 
   # default configuration
-  it { should contain_file('/etc/ssh/ssh_config').with_content(/^AddressFamily = inet$/) }
+  it { should contain_file('/etc/ssh/ssh_config').with_content(/^AddressFamily inet$/) }
   # user configuration
   context 'with ipv6_enabled => true' do
     let(:params) { { :ipv6_enabled => true } }
-    it { should contain_file('/etc/ssh/ssh_config').with_content(/^AddressFamily = any$/) }
+    it { should contain_file('/etc/ssh/ssh_config').with_content(/^AddressFamily any$/) }
   end
 
   context 'with ipv6_enabled => false' do
     let(:params) { { :ipv6_enabled => false } }
-    it { should contain_file('/etc/ssh/ssh_config').with_content(/^AddressFamily = inet$/) }
+    it { should contain_file('/etc/ssh/ssh_config').with_content(/^AddressFamily inet$/) }
   end
 
 end

@@ -44,101 +44,106 @@ describe 'ssh_hardening::server' do
   end
 
   # default configuration
-  it { should contain_file(sshd_config).with_content(/^Port = 22$/) }
+  it { should contain_file(sshd_config).with_content(/^Port 22$/) }
   # user configuration
   context 'with ports => [8022]' do
     let(:params) { { :ports => [8022] } }
-    # expect_option('ssh::server', 'Port', [8022])
+    it { should contain_file(sshd_config).with_content(/^Port 8022$/) }
   end
 
   # user configuration
   context 'with listen_to => 1.2.3.4' do
     let(:params) { { :listen_to => '1.2.3.4' } }
-    # expect_option('ssh::server', 'ListenAddress', '1.2.3.4')
+    it { should contain_file(sshd_config).with_content(/^ListenAddress 1.2.3.4$/) }
   end
 
   # default configuration
-  # expect_option('ssh::server', 'HostKey', [])
+  it { should_not contain_file(sshd_config).with_content(/^HostKey$/) }
   # user configuration
   context 'with host_key_files => [/a/file]' do
     let(:params) { { :host_key_files => ['/a/file'] } }
-    # expect_option('ssh::server', 'HostKey', ['/a/file'])
+    it { should contain_file(sshd_config).with_content(%r{^HostKey /a/file$}) }
   end
 
   # default configuration
-  # expect_option('ssh::server', 'ClientAliveInterval', 600)
+  it { should contain_file(sshd_config).with_content(/^ClientAliveInterval 600$/) }
   # user configuration
   context 'with client_alive_interval => 300' do
     let(:params) { { :client_alive_interval => 300 } }
-    # expect_option('ssh::server', 'ClientAliveInterval', 300)
+    it { should contain_file(sshd_config).with_content(/^ClientAliveInterval 300$/) }
   end
 
   # default configuration
-  # expect_option('ssh::server', 'ClientAliveCountMax', 3)
+  it { should contain_file(sshd_config).with_content(/^ClientAliveCountMax 3$/) }
   # user configuration
   context 'with client_alive_count => 2' do
     let(:params) { { :client_alive_count => 2 } }
-    # expect_option('ssh::server', 'ClientAliveCountMax', 2)
+    it { should contain_file(sshd_config).with_content(/^ClientAliveCountMax 2$/) }
   end
 
   # default configuration
-  # expect_option('ssh::server', 'PermitRootLogin', 'no')
+  it { should contain_file(sshd_config).with_content(/^PermitRootLogin no$/) }
   # user configuration
   context 'with allow_root_with_key => true' do
     let(:params) { { :allow_root_with_key => true } }
-    # expect_option('ssh::server', 'PermitRootLogin', 'without-password')
+    it { should contain_file(sshd_config).with_content(/^PermitRootLogin without-password$/) }
   end
+
   context 'with allow_root_with_key => false' do
     let(:params) { { :allow_root_with_key => false } }
-    # expect_option('ssh::server', 'PermitRootLogin', 'no')
+    it { should contain_file(sshd_config).with_content(/^PermitRootLogin no$/) }
   end
 
   # default configuration
-  # expect_option('ssh::server', 'AddressFamily', 'inet')
+  it { should contain_file(sshd_config).with_content(/^AddressFamily inet$/) }
   # user configuration
   context 'with ipv6_enabled => true' do
     let(:params) { { :ipv6_enabled => true } }
-    # expect_option('ssh::server', 'AddressFamily', 'any')
+    it { should contain_file(sshd_config).with_content(/^AddressFamily any$/) }
   end
+
   context 'with ipv6_enabled => false' do
     let(:params) { { :ipv6_enabled => false } }
-    # expect_option('ssh::server', 'AddressFamily', 'inet')
+    it { should contain_file(sshd_config).with_content(/^AddressFamily inet$/) }
   end
 
   # default configuration
-  # expect_option('ssh::server', 'UsePAM', 'no')
+  it { should contain_file(sshd_config).with_content(/^UsePAM no$/) }
   # user configuration
   context 'with use_pam => true' do
     let(:params) { { :use_pam => true } }
-    # expect_option('ssh::server', 'UsePAM', 'yes')
+    it { should contain_file(sshd_config).with_content(/^UsePAM yes$/) }
   end
+
   context 'with use_pam => false' do
     let(:params) { { :use_pam => false } }
-    # expect_option('ssh::server', 'UsePAM', 'no')
+    it { should contain_file(sshd_config).with_content(/^UsePAM no$/) }
   end
 
   # default configuration
-  # expect_option('ssh::server', 'AllowTcpForwarding', 'no')
+  it { should contain_file(sshd_config).with_content(/^AllowTcpForwarding no$/) }
   # user configuration
   context 'with allow_tcp_forwarding => true' do
     let(:params) { { :allow_tcp_forwarding => true } }
-    # expect_option('ssh::server', 'AllowTcpForwarding', 'yes')
+    it { should contain_file(sshd_config).with_content(/^AllowTcpForwarding yes$/) }
   end
+
   context 'with allow_tcp_forwarding => true' do
     let(:params) { { :allow_tcp_forwarding => false } }
-    # expect_option('ssh::server', 'AllowTcpForwarding', 'no')
+    it { should contain_file(sshd_config).with_content(/^AllowTcpForwarding no$/) }
   end
 
   # default configuration
-  # expect_option('ssh::server', 'AllowAgentForwarding', 'no')
+  it { should contain_file(sshd_config).with_content(/^AllowAgentForwarding no$/) }
   # user configuration
   context 'with allow_agent_forwarding => true' do
     let(:params) { { :allow_agent_forwarding => true } }
-    # expect_option('ssh::server', 'AllowAgentForwarding', 'yes')
+    it { should contain_file(sshd_config).with_content(/^AllowAgentForwarding yes$/) }
   end
+
   context 'with allow_agent_forwarding => false' do
     let(:params) { { :allow_agent_forwarding => false } }
-    # expect_option('ssh::server', 'AllowAgentForwarding', 'no')
+    it { should contain_file(sshd_config).with_content(/^PermitRootLogin no$/) }
   end
 
 end
