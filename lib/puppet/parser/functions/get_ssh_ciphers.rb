@@ -22,37 +22,37 @@ Puppet::Parser::Functions.newfunction(:get_ssh_ciphers, :type => :rvalue) do |ar
   osmajor = osrelease.sub(/\..*/, '')
   weak_ciphers = args[2] ? 'weak' : 'default'
 
-  ciphers_53 = {}
-  ciphers_53.default = 'aes256-ctr,aes192-ctr,aes128-ctr'
-  ciphers_53['weak'] = ciphers_53['default'] + ',aes256-cbc,aes192-cbc,aes128-cbc'
+  ciphers53 = {}
+  ciphers53.default = 'aes256-ctr,aes192-ctr,aes128-ctr'
+  ciphers53['weak'] = ciphers53['default'] + ',aes256-cbc,aes192-cbc,aes128-cbc'
 
-  ciphers_66 = {}
-  ciphers_66.default = 'chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr'
-  ciphers_66['weak'] = ciphers_66['default'] + ',aes256-cbc,aes192-cbc,aes128-cbc'
+  ciphers66 = {}
+  ciphers66.default = 'chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr'
+  ciphers66['weak'] = ciphers66['default'] + ',aes256-cbc,aes192-cbc,aes128-cbc'
 
   # creat the default version map (if os + version are default)
   default_vmap = {}
-  default_vmap.default = ciphers_53
+  default_vmap.default = ciphers53
 
   # create the main map
   m = {}
   m.default = default_vmap
 
   m['ubuntu'] = {}
-  m['ubuntu']['12'] = ciphers_53
-  m['ubuntu']['14'] = ciphers_66
-  m['ubuntu']['16'] = ciphers_66
-  m['ubuntu'].default = ciphers_53
+  m['ubuntu']['12'] = ciphers53
+  m['ubuntu']['14'] = ciphers66
+  m['ubuntu']['16'] = ciphers66
+  m['ubuntu'].default = ciphers53
 
   m['debian'] = {}
-  m['debian']['6'] = ciphers_53
-  m['debian']['7'] = ciphers_53
-  m['debian']['8'] = ciphers_66
-  m['debian'].default = ciphers_53
+  m['debian']['6'] = ciphers53
+  m['debian']['7'] = ciphers53
+  m['debian']['8'] = ciphers66
+  m['debian'].default = ciphers53
 
   m['redhat'] = {}
-  m['redhat']['6'] = ciphers_53
-  m['redhat'].default = ciphers_53
+  m['redhat']['6'] = ciphers53
+  m['redhat'].default = ciphers53
 
   m['centos'] = m['redhat']
   m['oraclelinux'] = m['redhat']

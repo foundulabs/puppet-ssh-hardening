@@ -1,10 +1,10 @@
 ---
 AllCops:
   Exclude:
-  - vendor/**/*
-  - test/**/*
-  - spec/fixtures/**/*
-  - Puppetfile
+    - vendor/**/*
+    - test/**/*
+    - spec/fixtures/**/*
+    - Puppetfile
 Documentation:
   Enabled: false
 AlignParameters:
@@ -27,6 +27,8 @@ Metrics/PerceivedComplexity:
   Max: 10
 Metrics/AbcSize:
   Max: 29
+Metrics/BlockLength:
+  Enabled: false
 Style/DotPosition:
   EnforcedStyle: trailing
   Enabled: true
