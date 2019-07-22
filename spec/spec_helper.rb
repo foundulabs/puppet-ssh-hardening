@@ -1,4 +1,5 @@
-# encoding: utf-8
+# frozen_string_literal: true
+
 #
 # Copyright 2014, Deutsche Telekom AG
 #
@@ -30,6 +31,7 @@ end
 def wrap_expected(val)
   return val if Puppet.version.to_f >= 4
   return val.map { |x| wrap_expected(x) } if val.is_a?(Array)
+
   val.to_s
 end
 
@@ -51,7 +53,7 @@ def expect_option(klass, key, val)
         if map[key] == wrap_expected(val)
           true
         else
-          fail "#{klass} option #{key.inspect} doesn't match (-- expected, ++ actual):\n"\
+          raise "#{klass} option #{key.inspect} doesn't match (-- expected, ++ actual):\n"\
             "-- #{val.inspect}\n"\
             "++ #{map[key].inspect}\n"
         end
