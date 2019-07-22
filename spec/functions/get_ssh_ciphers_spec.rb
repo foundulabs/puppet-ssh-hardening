@@ -24,51 +24,51 @@ describe 'get_ssh_ciphers' do
     Puppet::Parser::Functions.function('get_ssh_ciphers').should == 'function_get_ssh_ciphers'
   end
 
-  # should get the correct ciphers (default)
+  # expect get the correct ciphers (default)
   it do
-    should run.with_params('', '', false).
+    expect run.with_params('', '', false).
       and_return('aes256-ctr,aes192-ctr,aes128-ctr')
   end
 
-  # should get the correct ciphers (default weak)
+  # expect get the correct ciphers (default weak)
   it do
-    should run.with_params('', '', true).
+    expect run.with_params('', '', true).
       and_return('aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc')
   end
 
-  # should get the correct ciphers (ubuntu 12.04, default)
+  # expect get the correct ciphers (ubuntu 12.04, default)
   it do
-    should run.with_params('ubuntu', '12.04', false).
+    expect run.with_params('ubuntu', '12.04', false).
       and_return('aes256-ctr,aes192-ctr,aes128-ctr')
   end
 
-  # should get the correct ciphers (ubuntu 12.04, weak)
+  # expect get the correct ciphers (ubuntu 12.04, weak)
   it do
-    should run.with_params('ubuntu', '12.04', true).
+    expect run.with_params('ubuntu', '12.04', true).
       and_return('aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc')
   end
 
-  # should get the correct ciphers (ubuntu 14.04, default)
+  # expect get the correct ciphers (ubuntu 14.04, default)
   it do
-    should run.with_params('ubuntu', '14.04', false).
+    expect run.with_params('ubuntu', '14.04', false).
       and_return('chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr')
   end
 
-  # should get the correct ciphers (ubuntu 14.04, weak)
+  # expect get the correct ciphers (ubuntu 14.04, weak)
   it do
-    should run.with_params('ubuntu', '14.04', true).
+    expect run.with_params('ubuntu', '14.04', true).
       and_return('chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc')
   end
 
-  # should get the correct ciphers (ubuntu 16.04, default)
+  # expect get the correct ciphers (ubuntu 16.04, default)
   it do
-    should run.with_params('ubuntu', '16.04', false).
+    expect run.with_params('ubuntu', '16.04', false).
       and_return('chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr')
   end
 
-  # should get the correct ciphers (ubuntu 16.04, weak)
+  # expect get the correct ciphers (ubuntu 16.04, weak)
   it do
-    should run.with_params('ubuntu', '16.04', true).
+    expect run.with_params('ubuntu', '16.04', true).
       and_return('chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc')
   end
 

@@ -2,30 +2,30 @@
 
 require 'puppet-lint/tasks/puppet-lint'
 require 'puppetlabs_spec_helper/rake_tasks'
+require 'rubocop'
+require 'rubocop/rake_task'
 
 PuppetLint.configuration.send('disable_autoloader_layout')
 PuppetLint.configuration.send('disable_80chars')
 PuppetLint.configuration.fail_on_warnings = true
-PuppetLint.configuration.ignore_paths = ['vendor/**/*.pp']
+PuppetLint.configuration.ignore_paths = ['spec/**/*.pp', 'vendor/**/*.pp']
 
-if RUBY_VERSION > '1.9.2'
-  require 'rubocop'
-  require 'rubocop/rake_task'
-
-  desc 'Run all linters: rubocop and puppet-lint'
-  task :run_all_linters => %i[rubocop lint]
-
-  # Rubocop
-  desc 'Run Rubocop lint checks'
-  task :rubocop do
-    RuboCop::RakeTask.new
+desc 'Validate manifests, templates, and ruby files'
+task :validate do
+  Dir['manifests/**/*.pp'].each do |manifest|
+    sh "puppet parser validate --noop #{manifest}"
   end
-
-  task :default => %i[run_all_linters spec]
-
-else
-  desc 'Run all linters: rubocop and puppet-lint'
-  task :run_all_linters => [:lint]
-
-  task :default => %i[lint spec]
+  Dir['spec/**/*.rb', 'lib/**/*.rb'].each do |ruby_file|
+    sh "ruby -c #{ruby_file}" unless ruby_file =~ %r{spec/fixtures/}
+  end
+  Dir['templates/**/*.erb'].each do |template|
+    sh "erb -P -x -T '-' #{template} | ruby -c"
+  end
 end
+
+desc 'Run Rubocop lint checks'
+task :rubocop do
+  RuboCop::RakeTask.new
+end
+
+task :default => %i[rubocop validate lint spec]

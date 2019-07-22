@@ -24,52 +24,52 @@ describe 'get_ssh_kex' do
     Puppet::Parser::Functions.function('get_ssh_kex').should == 'function_get_ssh_kex'
   end
 
-  # should get the correct kex (default)
+  # expect get the correct kex (default)
   it do
-    should run.with_params('', '', false).
+    expect run.with_params('', '', false).
       and_return('diffie-hellman-group-exchange-sha256')
   end
 
-  # should get the correct kex (default weak)
+  # expect get the correct kex (default weak)
   it do
-    should run.with_params('', '', true).
+    expect run.with_params('', '', true).
       and_return('diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1')
   end
 
-  # should get the correct kex (ubuntu 12.04, default)
+  # expect get the correct kex (ubuntu 12.04, default)
   it do
-    should run.with_params('ubuntu', '12.04', false).
+    expect run.with_params('ubuntu', '12.04', false).
       and_return('diffie-hellman-group-exchange-sha256')
   end
 
-  # should get the correct kex (ubuntu 12.04, weak)
+  # expect get the correct kex (ubuntu 12.04, weak)
   it do
-    should run.with_params('ubuntu', '12.04', true).
+    expect run.with_params('ubuntu', '12.04', true).
       and_return('diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1')
   end
 
-  # should get the correct kex (ubuntu 14.04, default)
+  # expect get the correct kex (ubuntu 14.04, default)
   it do
-    should run.with_params('ubuntu', '14.04', false).
-      and_return('diffie-hellman-group-exchange-sha256')
+    expect run.with_params('ubuntu', '14.04', false).
+      and_return('curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256')
   end
 
-  # should get the correct kex (ubuntu 14.04, weak)
+  # expect get the correct kex (ubuntu 14.04, weak)
   it do
-    should run.with_params('ubuntu', '14.04', true).
-      and_return('diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1')
+    expect run.with_params('ubuntu', '14.04', true).
+      and_return('curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1')
   end
 
-  # should get the correct kex (ubuntu 16.04, default)
+  # expect get the correct kex (ubuntu 16.04, default)
   it do
-    should run.with_params('ubuntu', '16.04', false).
-      and_return('diffie-hellman-group-exchange-sha256')
+    expect run.with_params('ubuntu', '16.04', false).
+      and_return('curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256')
   end
 
-  # should get the correct kex (ubuntu 16.04, weak)
+  # expect get the correct kex (ubuntu 16.04, weak)
   it do
-    should run.with_params('ubuntu', '16.04', true).
-      and_return('diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1')
+    expect run.with_params('ubuntu', '16.04', true).
+      and_return('curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1')
   end
 
 end
