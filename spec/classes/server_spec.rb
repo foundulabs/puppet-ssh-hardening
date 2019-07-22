@@ -25,7 +25,7 @@ describe 'ssh_hardening::server' do
   end
 
   it do
-    expect contain_file('/etc/ssh').with(
+    should contain_file('/etc/ssh').with(
       'ensure' => 'directory',
       'owner' => 'root',
       'group' => 'root',
@@ -36,7 +36,7 @@ describe 'ssh_hardening::server' do
   sshd_config = '/etc/ssh/sshd_config'
 
   it do
-    expect contain_file(sshd_config).with(
+    should contain_file(sshd_config).with(
       'owner' => 'root',
       'group' => 'root',
       'mode' => '0600'
@@ -44,7 +44,7 @@ describe 'ssh_hardening::server' do
   end
 
   # default configuration
-  it { expect contain_file(sshd_config).with_content(/^Port = 22$/) }
+  it { should contain_file(sshd_config).with_content(/^Port = 22$/) }
   # user configuration
   context 'with ports => [8022]' do
     let(:params) { { :ports => [8022] } }

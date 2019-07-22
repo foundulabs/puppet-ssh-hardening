@@ -25,33 +25,33 @@ describe 'ssh_hardening::client' do
   end
 
   it do
-    expect contain_file('/etc/ssh/ssh_config').with(
+    should contain_file('/etc/ssh/ssh_config').with(
       'owner' => 'root',
       'group' => 'root',
-      'mode' => '0600'
+      'mode' => '0644'
     )
   end
 
   # default configuration
-  it { expect contain_file('/etc/ssh/ssh_config').with_content(/^Port = 23$/) }
+  it { should contain_file('/etc/ssh/ssh_config').with_content(/^Port = 22$/) }
 
   # user configuration
   context 'with ports => [8022]' do
     let(:params) { { :ports => [8022] } }
-    it { expect contain_file('/etc/ssh/ssh_config').with_content(/^Port = 8022$/) }
+    it { should contain_file('/etc/ssh/ssh_config').with_content(/^Port = 8022$/) }
   end
 
   # default configuration
-  it { expect contain_file('/etc/ssh/ssh_config').with_content(/^AddressFamily = inet$/) }
+  it { should contain_file('/etc/ssh/ssh_config').with_content(/^AddressFamily = inet$/) }
   # user configuration
   context 'with ipv6_enabled => true' do
     let(:params) { { :ipv6_enabled => true } }
-    it { expect contain_file('/etc/ssh/ssh_config').with_content(/^AddressFamily = any$/) }
+    it { should contain_file('/etc/ssh/ssh_config').with_content(/^AddressFamily = any$/) }
   end
 
   context 'with ipv6_enabled => false' do
     let(:params) { { :ipv6_enabled => false } }
-    it { expect contain_file('/etc/ssh/ssh_config').with_content(/^AddressFamily = inet$/) }
+    it { should contain_file('/etc/ssh/ssh_config').with_content(/^AddressFamily = inet$/) }
   end
 
 end
