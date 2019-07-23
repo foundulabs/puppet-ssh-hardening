@@ -58,7 +58,7 @@ class ssh_hardening::server (
   $ports                  = [22],
   $listen_to              = [],
   $host_key_files         = [],
-  $client_alive_interval  = 600,
+  $client_alive_interval  = 300,
   $client_alive_count     = 3,
   $allow_root_with_key    = false,
   $ipv6_enabled           = false,
@@ -207,9 +207,9 @@ class ssh_hardening::server (
     # In case you don't use PAM (`UsePAM no`), you can alternatively
     # restrict users and groups here. For key-based authentication
     # this is not necessary, since all keys must be explicitely enabled.
-    'DenyUsers'                       => '*',
-    'DenyGroups'                      => '*',
-    'AllowGroups'                     => 'ssh',
+    # 'DenyUsers'                       => '*',
+    # 'DenyGroups'                      => '*',
+    # 'AllowGroups'                     => 'ssh',
 
 
     # Network

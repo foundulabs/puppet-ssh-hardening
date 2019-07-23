@@ -71,7 +71,7 @@ class ssh_hardening(
     '/etc/ssh/ssh_host_ecdsa_key',
     '/etc/ssh/ssh_host_ed25519_key',
   ],
-  $client_alive_interval = 600,
+  $client_alive_interval = 300,
   $client_alive_count    = 3,
   $allow_root_with_key   = false,
   $ipv6_enabled          = false,
