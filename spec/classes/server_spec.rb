@@ -108,7 +108,7 @@ describe 'ssh_hardening::server' do
   end
 
   # default configuration
-  it { should contain_file(sshd_config).with_content(/^UsePAM yes$/) }
+  it { should contain_file(sshd_config).with_content(/^UsePAM no$/) }
   # user configuration
   context 'with use_pam => true' do
     let(:params) { { :use_pam => true } }

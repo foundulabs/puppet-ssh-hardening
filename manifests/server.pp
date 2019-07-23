@@ -62,7 +62,7 @@ class ssh_hardening::server (
   $client_alive_count     = 3,
   $allow_root_with_key    = false,
   $ipv6_enabled           = false,
-  $use_pam                = true,
+  $use_pam                = false,
   $allow_tcp_forwarding   = false,
   $allow_agent_forwarding = false,
   $max_auth_retries       = 2,
