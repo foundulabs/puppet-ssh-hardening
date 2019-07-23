@@ -101,7 +101,7 @@ class ssh_hardening::server (
 
   $default_hardened_options = {
     # Basic configuration
-    # ===================
+    # -------------------
     'AcceptEnv'                       => 'LANG LC_*',
 
     # Either disable or only allow root login via certificates.
@@ -123,7 +123,7 @@ class ssh_hardening::server (
     'HostKey'                         => $host_key_files,
 
     # Security configuration
-    # ======================
+    # ----------------------
 
     # Set the protocol family to 2 for security reasons.
     # Disables legacy support.
@@ -207,10 +207,9 @@ class ssh_hardening::server (
     # In case you don't use PAM (`UsePAM no`), you can alternatively
     # restrict users and groups here. For key-based authentication
     # this is not necessary, since all keys must be explicitely enabled.
-    #DenyUsers *
-    #AllowUsers user1
-    #DenyGroups *
-    #AllowGroups group1
+    'DenyUsers'                       => '*',
+    'DenyGroups'                      => '*',
+    'AllowGroups'                     => 'ssh',
 
 
     # Network
@@ -246,7 +245,7 @@ class ssh_hardening::server (
     'X11UseLocalhost'                 => 'yes',
 
     # Misc. configuration
-    # ===================
+    # -------------------
 
     'PrintMotd'                       => 'no',
     'PrintLastLog'                    => 'no',
@@ -266,10 +265,6 @@ class ssh_hardening::server (
     #Match Group sftponly
     #ForceCommand internal-sftp -l VERBOSE
     #ChrootDirectory /sftpchroot/home/%u
-    #AllowTcpForwarding no
-    #AllowAgentForwarding no
-    #PasswordAuthentication no
-    #PermitRootLogin no
   }
 
   $merged_options = merge($default_hardened_options, $options)
