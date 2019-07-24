@@ -66,11 +66,11 @@ describe 'ssh_hardening::server' do
   end
 
   # default configuration
-  it { should contain_file(sshd_config).with_content(/^ClientAliveInterval 600$/) }
+  it { should contain_file(sshd_config).with_content(/^ClientAliveInterval 300$/) }
   # user configuration
-  context 'with client_alive_interval => 300' do
-    let(:params) { { :client_alive_interval => 300 } }
-    it { should contain_file(sshd_config).with_content(/^ClientAliveInterval 300$/) }
+  context 'with client_alive_interval => 600' do
+    let(:params) { { :client_alive_interval => 600 } }
+    it { should contain_file(sshd_config).with_content(/^ClientAliveInterval 600$/) }
   end
 
   # default configuration
