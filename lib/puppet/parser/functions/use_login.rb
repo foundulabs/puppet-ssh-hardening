@@ -16,32 +16,22 @@
 # limitations under the License.
 #
 
-Puppet::Parser::Functions.newfunction(:use_privilege_separation, :type => :rvalue) do |args|
+Puppet::Parser::Functions.newfunction(:use_login, :type => :rvalue) do |args|
   os = args[0].downcase
   osrelease = args[1]
   osmajor = osrelease.sub(/\..*/, '')
 
-  ps53 = 'yes'
-  ps59 = 'sandbox'
-  ps75 = nil
-  ps = ps59
+  ps74 = nil
+  ps = 'no'
 
-  # redhat/centos/oracle 6.x has ssh 5.3
-  if %w[redhat centos oraclelinux].include? os
-    ps = ps53
-  end
-
-  if os == 'debian'
-    if osmajor.to_i <= 6
-      ps = ps53
-    elsif osmajor.to_i >= 10
-      ps = ps75
-    end
+  if os == 'debian' && osmajor.to_i >= 10
+    ps = ps74
   end
 
   if os == 'ubuntu' && osmajor.to_i >= 18
-    ps = ps75
+    ps = ps74
   end
 
   ps
 end
+  

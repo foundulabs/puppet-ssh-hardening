@@ -33,6 +33,11 @@ ListenAddress <%= l %>
 ListenAddress <%= listen %>
 <%- end -%>
 <%- end -%>
+<%- if uselogin = options.delete('UseLogin') -%>
+<%- if @facts['ssh_version'].to_f < 7.4 -%>
+UseLogin <%= bool2str(uselogin) %>
+<%- end -%>
+<%- end -%>
 
 <%- options.keys.sort_by{ |sk| (sk.to_s.downcase.include? "match") ? 'zzz' + sk.to_s : sk.to_s }.each do |k| -%>
 <%- v = options[k] -%>

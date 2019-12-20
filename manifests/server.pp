@@ -77,6 +77,7 @@ class ssh_hardening::server (
   $ciphers = get_ssh_ciphers($::operatingsystem, $::operatingsystemrelease, $cbc_required)
   $macs = get_ssh_macs($::operatingsystem, $::operatingsystemrelease, $weak_hmac)
   $kex = get_ssh_kex($::operatingsystem, $::operatingsystemrelease, $weak_kex)
+  $use_login = use_login($::operatingsystem, $::operatingsystemrelease)
   $priv_sep = use_privilege_separation($::operatingsystem, $::operatingsystemrelease)
 
   $permit_root_login = $allow_root_with_key ? {
@@ -171,7 +172,7 @@ class ssh_hardening::server (
     # --------------
 
     # Secure Login directives.
-    'UseLogin'                        => 'no',
+    'UseLogin'                        => $use_login,
     'UsePrivilegeSeparation'          => $priv_sep,
     'PermitUserEnvironment'           => 'no',
     'LoginGraceTime'                  => '30s',
