@@ -155,4 +155,9 @@ class ssh_hardening::client (
     content => template("${module_name}/ssh_config.erb"),
   }
 
+  exec { 'Remove weak DH primes':
+    command => 'sed -i "/ \(1023\|1535\) /d" /etc/ssh/moduli',
+    path    => '/bin',
+  }
+
 }
