@@ -63,6 +63,7 @@ class ssh_hardening::server (
   $allow_root_with_key    = false,
   $ipv6_enabled           = false,
   $use_pam                = false,
+  $use_totp               = false,
   $allow_tcp_forwarding   = false,
   $allow_agent_forwarding = false,
   $max_auth_retries       = 2,
@@ -86,6 +87,11 @@ class ssh_hardening::server (
   }
 
   $use_pam_option = $use_pam ? {
+    true  => 'yes',
+    false => 'no',
+  }
+
+  $use_totp_option = $use_totp ? {
     true  => 'yes',
     false => 'no',
   }
@@ -193,7 +199,7 @@ class ssh_hardening::server (
     'UsePAM'                          => $use_pam_option,
     'PasswordAuthentication'          => 'no',
     'PermitEmptyPasswords'            => 'no',
-    'ChallengeResponseAuthentication' => 'no',
+    'ChallengeResponseAuthentication' => $use_totp_option,
 
     # Only enable Kerberos authentication if it is configured.
     'KerberosAuthentication'          => 'no',
