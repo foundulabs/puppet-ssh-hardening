@@ -184,7 +184,7 @@ class ssh_hardening::server (
     'LoginGraceTime'                  => '30s',
     'MaxAuthTries'                    => $max_auth_retries,
     'MaxSessions'                     => 10,
-    'MaxStartups'                     => '10:30:100',
+    'MaxStartups'                     => '10:30:60',
 
     # Enable public key authentication
     'PubkeyAuthentication'            => 'yes',
