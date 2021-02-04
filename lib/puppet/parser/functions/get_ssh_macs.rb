@@ -45,12 +45,15 @@ Puppet::Parser::Functions.newfunction(:get_ssh_macs, :type => :rvalue) do |args|
   m['ubuntu']['12'] = macs59
   m['ubuntu']['14'] = macs66
   m['ubuntu']['16'] = macs66
+  m['ubuntu']['18'] = macs66
+  m['ubuntu']['20'] = macs66
   m['ubuntu'].default = macs66
 
   m['debian'] = {}
   m['debian']['6'] = macs53
   m['debian']['7'] = macs59
   m['debian']['8'] = macs66
+  m['debian']['10'] = macs66
   m['debian'].default = macs66
 
   m['redhat'] = {}

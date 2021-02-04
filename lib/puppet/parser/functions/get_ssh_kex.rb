@@ -30,6 +30,10 @@ Puppet::Parser::Functions.newfunction(:get_ssh_kex, :type => :rvalue) do |args|
   kex66.default = 'curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256'
   kex66['weak'] = kex66['default'] + ',diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1'
 
+  kex82 = {}
+  kex82.default = 'sntrup4591761x25519-sha512@tinyssh.org,curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256'
+  kex82['weak'] = kex66['default'] + ',diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1'
+
   # creat the default version map (if os + version are default)
   default_vmap = {}
   default_vmap.default = kex59
@@ -42,12 +46,15 @@ Puppet::Parser::Functions.newfunction(:get_ssh_kex, :type => :rvalue) do |args|
   m['ubuntu']['12'] = kex59
   m['ubuntu']['14'] = kex66
   m['ubuntu']['16'] = kex66
-  m['ubuntu'].default = kex66
+  m['ubuntu']['18'] = kex66
+  m['ubuntu']['20'] = kex82
+  m['ubuntu'].default = kex82
 
   m['debian'] = {}
   m['debian']['6'] = ''
   m['debian']['7'] = kex59
   m['debian']['8'] = kex66
+  m['debian']['10'] = kex66
   m['debian'].default = kex66
 
   m['redhat'] = {}

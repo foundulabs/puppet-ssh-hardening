@@ -276,7 +276,7 @@ class ssh_hardening::server (
 
   $merged_options = merge($default_hardened_options, $options)
 
-  file {'/etc/ssh':
+  file { '/etc/ssh':
     ensure => 'directory',
     mode   => '0755',
     owner  => 'root',
@@ -288,6 +288,13 @@ class ssh_hardening::server (
     group   => 'root',
     mode    => '0600',
     content => template("${module_name}/sshd_config.erb"),
+  }
+
+  file { ['/etc/ssh/ssh_host_rsa_key', '/etc/ssh/ssh_host_rsa_key.pem']: ensure => absent }
+
+  exec { 'ssh-keygen -q -N "" -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key':
+    path        => '/usr/bin',
+    require     => File['/etc/ssh/ssh_host_rsa_key', '/etc/ssh/ssh_host_rsa_key.pem'],
   }
 
 }
